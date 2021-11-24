@@ -1,0 +1,84 @@
+  server:
+  port: 9722
+  servlet:
+    context-path: /api/brc
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+
+spring:
+  boot:
+    admin:
+      #url: http://localhost:9723
+      client:
+        auto-registration: true
+        url: http://localhost:9723/boot/admin
+        #url: http://localhost:9723
+        username: admin
+        password: test1234!
+        instance:
+          #metadata:
+            #user.name: admin
+            #user.password: test1234!
+          service-url: http://api.leadgo.oig.kr/api/brc
+        security:
+          enabled: false
+          #user:
+           # name: admin
+            #password: test1234!
+  jwt:
+    secret: brclaon
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql : true
+  datasource:
+    url: jdbc:mariadb://localhost:3306/brc?characterEncoding=UTF-8&ServerTimezone=UTC
+    username: root
+    password: Laonpp00..L
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+
+app:
+  filePath: /var/app/brc/upload
+fireBase:
+  path: /var/app/brc/brandcare-5129a-firebase-adminsdk-q8j9j-1675ea66b8.json
+mail:
+  id: guemjiwoon@gmail.com
+  password: wldnsdl99*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  pattern:
+    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+    rolling-file-name: "/logs/abc.%d{yyyy-MM-dd}.%i"
+  file:
+    name: /logs/abc.log
+    max-history: 30
+  level:
+    org:
+      springframework: INFO
+
