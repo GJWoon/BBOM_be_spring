@@ -56,6 +56,7 @@ public class UserRepositorySupport {
                     .where(user.email.eq(email))
                     .fetchCount();
 
+
         }
 
     public long duplicateNickName(String nickName){
