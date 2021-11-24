@@ -57,6 +57,7 @@ public class UserRepositorySupport {
                     .fetchCount();
 
 
+
         }
 
     public long duplicateNickName(String nickName){
