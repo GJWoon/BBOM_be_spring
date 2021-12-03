@@ -1,7 +1,9 @@
 package com.laonstory.bbom.domain.content.domain;
 
 
+import com.laonstory.bbom.domain.content.dto.CommentUpdateDto;
 import com.laonstory.bbom.domain.user.domain.User;
+import com.laonstory.bbom.global.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_comment")
 @Builder
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
 
     @Id
@@ -38,8 +40,13 @@ public class Comment {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "parent")
     private  final List<Comment> childComment = new ArrayList<>();
 
+
+
     public void addParentComment(Comment comment){
         this.parent = comment;
         comment.childComment.add(this);
+    }
+    public void updateContent(CommentUpdateDto dto){
+        this.commentContent = dto.getContent();
     }
 }

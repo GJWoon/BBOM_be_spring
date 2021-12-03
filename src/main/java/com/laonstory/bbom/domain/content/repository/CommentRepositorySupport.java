@@ -1,6 +1,7 @@
 package com.laonstory.bbom.domain.content.repository;
 
 
+import com.laonstory.bbom.domain.content.domain.Comment;
 import com.laonstory.bbom.domain.content.dto.CommentResponse;
 import com.laonstory.bbom.domain.user.domain.User;
 import com.querydsl.core.QueryResults;
@@ -20,21 +21,18 @@ public class CommentRepositorySupport {
     private final JPAQueryFactory queryFactory;
 
 
-    public Page<CommentResponse> findAllPaging(Pageable pageable, Long contentId){
-
-        QueryResults<CommentResponse> result =
+    public Page<Comment> findAllPaging(Pageable pageable, Long contentId,User user) {
+        QueryResults<Comment> result =
                 queryFactory
-                .select(Projections.constructor(CommentResponse.class,comment))
-                .from(comment)
-                        .where(comment.content.id.eq(contentId),comment.parent.id.isNull())
+                        .selectFrom(comment)
+                        .where(comment.content.id.eq(contentId), comment.parent.id.isNull())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
-                .fetchResults();
+                        .fetchResults();
 
-        return new PageImpl<>(result.getResults(),pageable,result.getTotal());
-                        }
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
 
-
+    }
 }
 
 

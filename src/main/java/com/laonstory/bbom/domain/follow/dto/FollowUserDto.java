@@ -20,23 +20,34 @@ public class FollowUserDto {
 
         private String profileImage;
 
+        private double weight;
 
-        //나를 팔로우 한 사람들
-        public FollowUserDto(Follow follow){
+        private double height;
 
+        private String intro;
+        //나를 팔로우 한 사람들]
+        public FollowUserDto(Follow follow,String uu,User user){
                 this.id = follow.getFollower().getId();
-                this.isFollow = true;
-                this.nickName = follow.getFollower().getNickName();
+                this.isFollow = follow
+                        .getFollower()
+                        .getFollows()
+                        .stream()
+                        .anyMatch(e -> e.getFollower().getId().equals(user.getId()));
                 this.profileImage = follow.getFollower().getProfileImage();
-
+                this.weight = follow.getFollower().getWeight();
+                this.height = follow.getFollower().getHeight();
+                this.intro = follow.getFollower().getIntro();
+                this.nickName = follow.getFollower().getNickName();
         }
 
-        //내가 한 사람들
         public FollowUserDto(Follow follow, User user){
                 this.id = follow.getUser().getId();
-                this.isFollow = follow.getUser().getFollows().stream().anyMatch(e-> e.getUser().getId().equals(user.getId()));
+                this.isFollow = true;
                 this.nickName = follow.getUser().getNickName();
                 this.profileImage = follow.getUser().getProfileImage();
+                this.weight = follow.getUser().getWeight();
+                this.height = follow.getUser().getHeight();
+                this.intro = follow.getUser().getIntro();
         }
 
 }

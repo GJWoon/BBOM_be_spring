@@ -6,6 +6,7 @@ import com.laonstory.bbom.global.dto.response.CE;
 import com.laonstory.bbom.global.error.exception.BusinessException;
 import com.laonstory.bbom.global.error.model.ErrorCode;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +22,13 @@ import static com.laonstory.bbom.domain.user.domain.QUser.user;
 @RequiredArgsConstructor
 @Repository
 public class UserRepositorySupport {
-
         private final JPAQueryFactory queryFactory;
-
         public User findById(Long id){
             User result = queryFactory
                     .selectFrom(user)
                     .where(user.id.eq(id))
                     .fetchOne()
                     ;
-
             if(result ==null){
                 throw new BusinessException(ErrorCode.NOT_FOUND_USER);
             }
@@ -48,18 +46,12 @@ public class UserRepositorySupport {
             }
             return result;
         }
-
         public long duplicateEmail(String email){
-
             return queryFactory
                     .selectFrom(user)
                     .where(user.email.eq(email))
                     .fetchCount();
-
-
-
         }
-
     public long duplicateNickName(String nickName){
         return queryFactory
                 .selectFrom(user)
@@ -86,5 +78,21 @@ public class UserRepositorySupport {
                     .limit(100)
                     .distinct()
                     .fetch();
+    }
+
+    public Page<User> search(String query,Pageable pageable){
+
+            QueryResults<User> result = queryFactory
+                    .selectFrom(user)
+                    .where(user.id.isNotNull(),query(query))
+                    .limit(pageable.getPageSize())
+                    .offset(pageable.getOffset())
+                    .fetchResults();
+                return new PageImpl<>(result.getResults(),pageable, result.getTotal());
+    }
+
+    private Predicate query(String query){
+            if(query == null) return null;
+            return user.nickName.contains(query);
     }
 }

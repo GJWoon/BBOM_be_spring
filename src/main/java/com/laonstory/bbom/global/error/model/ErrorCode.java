@@ -37,6 +37,9 @@ public enum ErrorCode {
     DUPLICATE_WITHDRAW_USER(409,"CP001","동일한 정보로 재가입한 회원입니다.\n이용 중으로 변경할 수 없습니다."),
     CHECK_TIME(501,"S001","30초 이내에 게시글을 작성할 수 없습니다."),
     WITHDRWA_USER(501,"CP001","탈퇴한 회원입니다."),
+    NOT_CURRENT_USER(500,"CP001","회원탈퇴는 본안계정으로 진행 가능합니다."),
+    NOT_CONTENT_USER(500,"CP003","본인이 작성한 게시글만 삭제 가능합니다."),
+
     FOLLOWING_ME(500,"F001","본인을 팔로우 할 수 없습니다.");
     private final int status;
     private final String code;

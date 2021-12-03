@@ -3,6 +3,7 @@ package com.laonstory.bbom.domain.user.domain;
 
 import com.laonstory.bbom.domain.follow.domain.Follow;
 import com.laonstory.bbom.domain.user.dto.UserResisterDto;
+import com.laonstory.bbom.domain.user.dto.UserUpdateDto;
 import com.laonstory.bbom.global.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +49,9 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String gender;
 
     private String intro;
+
+    private String fcmToken;
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "user",cascade = CascadeType.ALL)
     private final List<Follow> follows = new ArrayList<>();
 
@@ -100,9 +104,26 @@ public class User extends BaseTimeEntity implements UserDetails {
                 .build();
      }
 
+     public void update(UserUpdateDto dto){
+
+        this.nickName = dto.getNickName();
+        this.gender = dto.getGender();
+        this.height = dto.getHeight();
+        this.intro = dto.getIntro();
+        this.weight = dto.getWeight();
+
+     }
+
      public void addImage(String imagePath){
 
         this.profileImage = imagePath;
      }
 
+     public void updatePassword(String password){
+        this.password = password;
+     }
+
+     public void updateFcm(String token){
+        this.fcmToken = token;
+     }
 }

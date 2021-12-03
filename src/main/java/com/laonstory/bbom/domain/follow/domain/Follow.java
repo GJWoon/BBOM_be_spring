@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "T_FOLLOW")
@@ -26,5 +28,7 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     private User follower;
 
+    @CreatedDate
+    private LocalDateTime createdDate;
 
 }

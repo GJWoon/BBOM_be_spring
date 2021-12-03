@@ -45,21 +45,23 @@ public class ContentApi {
                                                       @RequestParam(required = false) String size
 
     ) {
-        return new ApiPagingResponse<>(contentService.findAllPaging(page, query, user,type,weight,height,size));
+        return new ApiPagingResponse<>(contentService.findAllPaging(page, query, user, type, weight, height, size));
     }
 
 
-
-    @GetMapping("/search") ApiPagingResponse<ContentMyPageResponse> search(
+    @GetMapping("/search")
+    ApiPagingResponse<ContentMyPageResponse> search(
 
             @RequestParam(defaultValue = "1", required = false, name = "page") int page,
             @RequestParam(required = false) String query
-    ){
+    ) {
         return new ApiPagingResponse<>(contentService.findContentMyPageResponse(page, query));
     }
 
-
-
+    @PatchMapping()
+    public ApiResponse<Boolean> updateContent(@RequestPart ContentUpdateDto dto, @RequestPart List<MultipartFile> infoImages) {
+        return new ApiResponse<>(contentService.updateContent(dto,infoImages));
+    }
 
     @GetMapping("/{id}")
     public ApiResponse<ContentDetailResponse> findById(@PathVariable Long id,
@@ -67,24 +69,35 @@ public class ContentApi {
     ) {
         return new ApiResponse<>(contentService.findById(id, user));
     }
+
     @GetMapping("/like")
     public ApiResponse<Boolean> like(@RequestParam Long id, @AuthenticationPrincipal User user) {
         return new ApiResponse<>(contentService.like(id, user));
     }
+
     @GetMapping("/suggestion")
-    public ApiResponse<ContentResponseListWithUserResponseList> findSuggestion(@AuthenticationPrincipal User user){
+    public ApiResponse<ContentResponseListWithUserResponseList> findSuggestion(@AuthenticationPrincipal User user) {
         return new ApiResponse<>(contentService.suggestion(user));
     }
+
     @GetMapping("/{id}/page")
     public ApiPagingResponse<ContentMyPageResponse> findContentMyPageResponse(@PathVariable Long id,
-                                                                              @RequestParam(required = false,defaultValue = "1") int page
+                                                                              @RequestParam(required = false, defaultValue = "1") int page
 
-    ){
-        return new ApiPagingResponse<>(contentService.findContentMyPageResponse(id,page));
+    ) {
+        return new ApiPagingResponse<>(contentService.findContentMyPageResponse(id, page));
     }
+
     @GetMapping("/mine")
     public ApiPagingResponse<ContentMyPageResponse> findContentMyPageResponse(@AuthenticationPrincipal User user,
-                                                                              @RequestParam(required = false,defaultValue = "1") int page
-    ){
-        return new ApiPagingResponse<>(contentService.findContentMyPageResponse(user.getId(),page));
-    }}
+                                                                              @RequestParam(required = false, defaultValue = "1") int page
+    ) {
+        return new ApiPagingResponse<>(contentService.findContentMyPageResponse(user.getId(), page));
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Boolean> deleteContent(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        return new ApiResponse<>(contentService.deleteContent(id, user));
+    }
+
+}

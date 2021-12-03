@@ -2,6 +2,7 @@ package com.laonstory.bbom.domain.content.domain;
 
 
 import com.laonstory.bbom.domain.content.dto.ContentDto;
+import com.laonstory.bbom.domain.content.dto.ContentUpdateDto;
 import com.laonstory.bbom.domain.user.domain.User;
 import com.laonstory.bbom.global.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
@@ -58,5 +59,8 @@ public class Content extends BaseTimeEntity {
                 .isShow(dto.getIsShow())
                 .build();
 
+    }
+    public void update(ContentUpdateDto dto){
+        this.content = dto.getContent();
     }
 }

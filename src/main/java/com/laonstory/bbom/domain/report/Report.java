@@ -1,38 +1,35 @@
-package com.laonstory.bbom.domain.content.domain;
+package com.laonstory.bbom.domain.report;
 
 
 import com.laonstory.bbom.domain.user.domain.User;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Table(name = "t_content_like")
-@Entity()
+@Entity
+@Table(name = "t_report")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
-public class ContentLike {
+public class Report {
 
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Content content;
-
-    //TODO
-    // User 만들기
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User reportedUser;
 
     @CreatedDate
     private LocalDateTime createdDate;
 
+    private String reason;
 }

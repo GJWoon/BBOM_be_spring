@@ -18,7 +18,7 @@ public class UserResponse extends UserSimpleResponse {
     private double weight;
     private String gender;
     private LocalDateTime createdDate;
-
+    private String intro;
     public UserResponse(User user){
 
         super(user);
@@ -27,6 +27,7 @@ public class UserResponse extends UserSimpleResponse {
         this.height = user.getHeight();
         this.weight = user.getWeight();
         this.createdDate = user.getCreatedDate();
+        this.intro = user.getIntro();
     }
 
 
