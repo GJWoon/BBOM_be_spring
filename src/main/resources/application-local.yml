@@ -38,7 +38,17 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'your email'
+    password: 'your password'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 logging:
   level:
     root: info
@@ -47,7 +57,8 @@ logging:
 app:
   filePath: /Users/geumjiun/Documents/upload
 fireBase:
-  path: /var/app/brc/brandcare-5129a-firebase-adminsdk-q8j9j-1675ea66b8.json
+  path: /Users/geumjiun/Downloads/NAVERWORKS/bbom-project-firebase-adminsdk-700gj-9d42aaa861.json
 mail:
   id: guemjiwoon@gmail.com
   password: wldnsdl99*
+
